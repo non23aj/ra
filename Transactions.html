@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transactions</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo"><h2>pages</h2></div>
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="transactions.html" class="nav-item active"><i class="fas fa-exchange-alt"></i> Transactions</a>
+    <a href="wallet.html" class="nav-item"><i class="fas fa-wallet"></i> Wallet</a>
+    <a href="goals.html" class="nav-item"><i class="fas fa-bullseye"></i> Goals</a>
+    <a href="budget.html" class="nav-item"><i class="fas fa-chart-pie"></i> Budget</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+  </div>
+
+  <div class="main-content">
+    <div class="main-header">
+      <h1>Transactions</h1>
+    </div>
+
+    <div class="transaction-form">
+      <h3>Add Transaction</h3>
+      <input type="text" id="transaction-amount" placeholder="Amount">
+      <input type="text" id="transaction-category" placeholder="Category">
+      <input type="date" id="transaction-date">
+      <textarea id="transaction-note" placeholder="Notes (optional)"></textarea>
+      <button onclick="addTransaction()">Add Transaction</button>
+    </div>
+
+    <div class="transaction-list">
+      <h3>Transaction History</h3>
+      <ul id="transactions"></ul>
+    </div>
+  </div>
+  <style>/* Transaction Form Design */
+    .transaction-form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .transaction-form h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #4b4fec;
+    }
+    
+    .transaction-form input,
+    .transaction-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+    }
+    
+    .transaction-form button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #4b4fec, #8b5cf6);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease;
+    }
+    
+    .transaction-form button:hover {
+      background: linear-gradient(135deg, #8b5cf6, #4b4fec);
+    }
+    
+    /* Transaction History List */
+    .transaction-list {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .transaction-list h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #4b4fec;
+    }
+    
+    .transaction-list ul {
+      list-style: none;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .transaction-list li {
+      background-color: #f5f7fb;
+      padding: 10px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .transaction-list li span {
+      font-size: 14px;
+    }
+    
+    /* Add smooth animation */
+    .transaction-list li {
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+    }</style>
+  
+
+  <script>
+    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+    function addTransaction() {
+      const amount = document.getElementById('transaction-amount').value;
+      const category = document.getElementById('transaction-category').value;
+      const date = document.getElementById('transaction-date').value;
+      const note = document.getElementById('transaction-note').value;
+
+      if (amount && category && date) {
+        const transaction = { amount, category, date, note };
+        transactions.push(transaction);
+        localStorage.setItem('transactions', JSON.stringify(transactions));
+        displayTransactions();
+        clearForm();
+      } else {
+        alert('Please fill all required fields.');
+      }
+    }
+
+    function displayTransactions() {
+      const list = document.getElementById('transactions');
+      list.innerHTML = '';
+      transactions.forEach((transaction, index) => {
+        const item = document.createElement('li');
+        item.textContent = `${transaction.date} - ${transaction.category}: $${transaction.amount} (${transaction.note || 'No notes'})`;
+        list.appendChild(item);
+      });
+    }
+
+    function clearForm() {
+      document.getElementById('transaction-amount').value = '';
+      document.getElementById('transaction-category').value = '';
+      document.getElementById('transaction-date').value = '';
+      document.getElementById('transaction-note').value = '';
+    }
+
+    displayTransactions();
+  </script>
+</body>
+</html>

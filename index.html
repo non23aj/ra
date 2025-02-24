@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finance Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <h2>pages</h2>
+    </div>
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="transactions.html" class="nav-item"><i class="fas fa-exchange-alt"></i> Transactions</a>
+    <a href="wallet.html" class="nav-item"><i class="fas fa-wallet"></i> Wallet</a>
+    <a href="goals.html" class="nav-item"><i class="fas fa-bullseye"></i> Goals</a>
+    <a href="budget.html" class="nav-item"><i class="fas fa-chart-pie"></i> Budget</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+  </div>
+
+  <div class="main-content">
+    <div class="main-header">
+      <h1>Dashboard</h1>
+      <div class="user-info">
+        <i class="fas fa-bell"></i>
+        <div class="user-avatar">
+          <img src="user-avatar.jpg" alt="User Avatar">
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-stats">
+      <div class="card">
+        <h3>Total Balance</h3>
+        <p id="total-balance">$0</p>
+      </div>
+      <div class="card">
+        <h3>Income</h3>
+        <p id="total-income">$0</p>
+      </div>
+      <div class="card">
+        <h3>Expenses</h3>
+        <p id="total-expenses">$0</p>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-card">
+        <h3>Total Balance Overview</h3>
+        <canvas id="balanceChart"></canvas>
+      </div>
+      <div class="chart-card">
+        <h3>Expense vs Budget</h3>
+        <canvas id="expenseChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Store and Retrieve Data from LocalStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      let totalBalance = localStorage.getItem('totalBalance') || 0;
+      let totalIncome = localStorage.getItem('totalIncome') || 0;
+      let totalExpenses = localStorage.getItem('totalExpenses') || 0;
+
+      document.getElementById('total-balance').textContent = `$${totalBalance}`;
+      document.getElementById('total-income').textContent = `$${totalIncome}`;
+      document.getElementById('total-expenses').textContent = `$${totalExpenses}`;
+    });
+  </script>
+</body>
+</html>

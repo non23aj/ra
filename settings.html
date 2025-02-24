@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <h2>pages</h2>
+    </div>
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="transactions.html" class="nav-item"><i class="fas fa-exchange-alt"></i> Transactions</a>
+    <a href="wallet.html" class="nav-item"><i class="fas fa-wallet"></i> Wallet</a>
+    <a href="goals.html" class="nav-item"><i class="fas fa-bullseye"></i> Goals</a>
+    <a href="budget.html" class="nav-item"><i class="fas fa-chart-pie"></i> Budget</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <a href="settings.html" class="nav-item active"><i class="fas fa-cog"></i> Settings</a>
+  </div>
+  
+  <div class="main-content">
+    <div class="main-header">
+      <h1>Settings</h1>
+    </div>
+
+    <div class="settings-card">
+      <h3>Account Settings</h3>
+      <label for="change-password">Change Password</label>
+      <input type="password" id="change-password" placeholder="Enter new password">
+      <button onclick="changePassword()">Save Password</button>
+
+      <h3>Security</h3>
+      <label>
+        <input type="checkbox" id="enable-2fa"> Enable Two-Factor Authentication
+      </label>
+      <button onclick="toggle2FA()">Save Security Settings</button>
+
+      <h3>Notifications</h3>
+      <label>
+        <input type="checkbox" id="enable-notifications"> Enable Notifications
+      </label>
+      <button onclick="saveNotifications()">Save Notification Settings</button>
+    </div>
+  </div>
+  <style>.settings-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+  }
+  
+  .settings-card h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #4b4fec;
+  }
+  
+  .settings-card label {
+    display: block;
+    margin-bottom: 10px;
+    color: #4b4fec;
+    font-weight: bold;
+  }
+  
+  .settings-card input[type="password"],
+  .settings-card input[type="checkbox"] {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+  }
+  
+  .settings-card button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #4b4fec, #8b5cf6);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+  }
+  
+  .settings-card button:hover {
+    background: linear-gradient(135deg, #8b5cf6, #4b4fec);
+  }
+  
+  .settings-card input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+  }
+  
+  .settings-card label input {
+    margin-right: 10px;
+  }
+</style>
+
+  <script>
+    // Save password
+    function changePassword() {
+      const password = document.getElementById('change-password').value;
+      if (password) {
+        localStorage.setItem('userPassword', password);
+        alert('Password changed successfully!');
+      } else {
+        alert('Please enter a valid password.');
+      }
+    }
+
+    // Toggle 2FA
+    function toggle2FA() {
+      const enable2FA = document.getElementById('enable-2fa').checked;
+      localStorage.setItem('2FAEnabled', enable2FA);
+      alert('Security settings updated!');
+    }
+
+    // Save notification settings
+    function saveNotifications() {
+      const enableNotifications = document.getElementById('enable-notifications').checked;
+      localStorage.setItem('notificationsEnabled', enableNotifications);
+      alert('Notification settings updated!');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo"><h2>pages</h2></div>
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="transactions.html" class="nav-item"><i class="fas fa-exchange-alt"></i> Transactions</a>
+    <a href="wallet.html" class="nav-item"><i class="fas fa-wallet"></i> Wallet</a>
+    <a href="goals.html" class="nav-item"><i class="fas fa-bullseye"></i> Goals</a>
+    <a href="budget.html" class="nav-item active"><i class="fas fa-chart-pie"></i> Budget</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+  </div>
+
+  <div class="main-content">
+    <div class="main-header">
+      <h1>Budget Management</h1>
+    </div>
+    <div class="budget-setup">
+      <form id="budgetForm">
+        <label for="category">Category:</label>
+        <input type="text" id="category" placeholder="Enter category" required>
+
+        <label for="limit">Limit Amount:</label>
+        <input type="number" id="limit" placeholder="Enter limit" required>
+
+        <button type="submit">Add Budget</button>
+      </form>
+    </div>
+
+    <div class="budget-list">
+      <h2>Your Budgets</h2>
+      <ul id="budgetItems"></ul>
+    </div>
+  </div>
+  <style>.budget-setup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .budget-setup form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .budget-setup label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #4b4fec;
+  }
+  
+  .budget-setup input {
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+  }
+  
+  .budget-setup button {
+    padding: 12px;
+    background: linear-gradient(135deg, #4b4fec, #8b5cf6);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .budget-setup button:hover {
+    background: linear-gradient(135deg, #8b5cf6, #4b4fec);
+  }
+  
+  .budget-list {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .budget-list h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #4b4fec;
+  }
+  
+  .budget-list ul {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .budget-list li {
+    background-color: #f5f7fb;
+    padding: 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }</style>
+  
+
+  <script>
+    document.getElementById('budgetForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const category = document.getElementById('category').value;
+      const limit = document.getElementById('limit').value;
+
+      const budget = {
+        category,
+        limit
+      };
+
+      let budgets = JSON.parse(localStorage.getItem('budgets')) || [];
+      budgets.push(budget);
+      localStorage.setItem('budgets', JSON.stringify(budgets));
+      displayBudgets();
+      this.reset();
+    });
+
+    function displayBudgets() {
+      const budgetList = document.getElementById('budgetItems');
+      budgetList.innerHTML = '';
+      const budgets = JSON.parse(localStorage.getItem('budgets')) || [];
+      budgets.forEach((budget, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `${budget.category} - $${budget.limit} <button onclick="removeBudget(${index})">Remove</button>`;
+        budgetList.appendChild(li);
+      });
+    }
+
+    function removeBudget(index) {
+      let budgets = JSON.parse(localStorage.getItem('budgets')) || [];
+      budgets.splice(index, 1);
+      localStorage.setItem('budgets', JSON.stringify(budgets));
+      displayBudgets();
+    }
+
+    window.onload = displayBudgets;
+  </script>
+</body>
+</html>

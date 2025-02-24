@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h1 class="login-title">Welcome Back</h1>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" placeholder="Enter First Name" required>
+        </div>
+        <div class="input-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" placeholder="Enter Last Name" required>
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Enter Email" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter Password" required>
+        </div>
+        <button type="submit" class="btn-primary">Login</button>
+        <p class="forgot-password"><a href="#">Forgot Password?</a></p>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f7fb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .login-card {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .login-title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 10px;
+      background-color: #4e63ea;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-primary:hover {
+      background-color: #3a4cbf;
+    }
+
+    .forgot-password {
+      margin-top: 15px;
+    }
+
+    .forgot-password a {
+      color: #4e63ea;
+      text-decoration: none;
+    }
+  </style>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      if (firstName && lastName && email && password) {
+        const user = { firstName, lastName, email };
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+        window.location.href = 'dashboard.html';
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+  </script>
+
+  <script>
+    // Check login status on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+      if (!loggedInUser && window.location.pathname !== '/login.html') {
+        window.location.href = 'login.html';
+      }
+    });
+  
+    // Logout functionality
+    function logoutUser() {
+      localStorage.removeItem('loggedInUser');
+      window.location.href = 'login.html';
+    }
+  </script>
+  
+  <!-- Add a logout button in the sidebar or header -->
+  <a href="index.html" class="nav-item" onclick="logoutUser()">
+    <i class="fas fa-sign-out-alt"></i> Logout
+  </a>
+  
+</body>
+</html>

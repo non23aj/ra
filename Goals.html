@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Goals</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo"><h2>pages</h2></div>
+    <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="transactions.html" class="nav-item"><i class="fas fa-exchange-alt"></i> Transactions</a>
+    <a href="wallet.html" class="nav-item"><i class="fas fa-wallet"></i> Wallet</a>
+    <a href="goals.html" class="nav-item active"><i class="fas fa-bullseye"></i> Goals</a>
+    <a href="budget.html" class="nav-item"><i class="fas fa-chart-pie"></i> Budget</a>
+    <a href="analytics.html" class="nav-item"><i class="fas fa-chart-line"></i> Analytics</a>
+    <a href="settings.html" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+  </div>
+
+  <div class="main-content">
+    <h1>Goals</h1>
+    <form id="goalForm">
+      <input type="text" placeholder="Goal Name" id="goalName" required>
+      <input type="number" placeholder="Target Amount" id="targetAmount" required>
+      <input type="date" id="goalDate" required>
+      <button type="submit">Add Goal</button>
+    </form>
+    <div id="goalsList"></div>
+  </div>
+
+  <script>
+    document.getElementById('goalForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('goalName').value;
+      const target = document.getElementById('targetAmount').value;
+      const date = document.getElementById('goalDate').value;
+      
+      let goals = JSON.parse(localStorage.getItem('goals')) || [];
+      goals.push({ name, target, date, saved: 0 });
+      localStorage.setItem('goals', JSON.stringify(goals));
+      displayGoals();
+    });
+
+    function displayGoals() {
+      const goals = JSON.parse(localStorage.getItem('goals')) || [];
+      const goalsList = document.getElementById('goalsList');
+      goalsList.innerHTML = '';
+      goals.forEach((goal, index) => {
+        goalsList.innerHTML += `<div class="card">
+          <h3>${goal.name}</h3>
+          <p>Target: $${goal.target}</p>
+          <p>Saved: $${goal.saved}</p>
+          <p>Deadline: ${goal.date}</p>
+          <button onclick="deleteGoal(${index})">Delete</button>
+        </div>`;
+      });
+    }
+
+    function deleteGoal(index) {
+      let goals = JSON.parse(localStorage.getItem('goals')) || [];
+      goals.splice(index, 1);
+      localStorage.setItem('goals', JSON.stringify(goals));
+      displayGoals();
+    }
+
+    window.onload = displayGoals;
+  </script>
+</body>
+</html>
